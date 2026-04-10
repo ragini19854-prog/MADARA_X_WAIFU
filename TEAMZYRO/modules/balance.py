@@ -17,11 +17,11 @@ BALANCE_IMAGES = [
     "https://files.catbox.moe/16h9vi.jpg",
     "https://files.catbox.moe/qg2nso.jpg",
     "https://files.catbox.moe/tp0lup.jpg",
-    "https://files.catbox.mo/h0ftuw.jpg",
-    "https://files.catbox.moe/syanmk.jpg",
-    "https://files.catbox.moe/shslw1.jpg",
-    "https://files.catbox.moe/xokoit.jpg",
-    "https://files.catbox.moe/6w5fl4.jpg"
+    "https://files.catbox.moe/u27fk5.jpg",
+    "https://files.catbox.moe/vxblki.jpg",
+    "https://files.catbox.moe/xz9gz8.jpgg",
+    "https://files.catbox.moe/j523kg.jpg",
+    "https://files.catbox.moe/cuwc7t.jpg"
 ]
 
 # ---------------- BALANCE COMMAND ---------------- #
