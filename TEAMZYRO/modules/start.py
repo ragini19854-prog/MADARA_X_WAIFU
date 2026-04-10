@@ -38,8 +38,8 @@ async def generate_start_message(client, message):
 
     buttons = [
         [InlineKeyboardButton("⋆ᴀᴅᴅ ᴛᴏ ʏᴏᴜʀ ɢʀᴏᴜᴘ⋆", url=f"https://t.me/{bot_user.username}?startgroup=true")],
-        [InlineKeyboardButton("❍sᴜᴘᴘᴏʀᴛ❍", url="https://t.me/GOJO_NOBITA_II"), 
-         InlineKeyboardButton("❍ᴄʜᴀɴɴᴇʟ❍", url="https://t.me/thedrxnet")],
+        [InlineKeyboardButton("❍sᴜᴘᴘᴏʀᴛ❍", url="https://t.me/+dv_rcq5uIXhmMWM1"), 
+         InlineKeyboardButton("❍ᴄʜᴀɴɴᴇʟ❍", url="https://t.me/+Imyf3M9TO5k1ODRl")],
         [InlineKeyboardButton("⋆ʜᴇʟᴘ⋆", callback_data="open_help")],
         [InlineKeyboardButton("✦ʟᴏʀᴅ✦", url="http://t.me/II_YOUR_BILAUTA_ll")]
     ]
@@ -53,7 +53,7 @@ async def generate_group_start_message(client):
     buttons = [
         [
             InlineKeyboardButton("◦ᴀᴅᴅ ᴍᴇ◦", url=f"https://t.me/{bot_user.username}?startgroup=true"),
-            InlineKeyboardButton("◦sᴜᴘᴘᴏʀᴛ◦", url="https://t.me/+8KU5ZDxvZyw0N2U1"),
+            InlineKeyboardButton("◦sᴜᴘᴘᴏʀᴛ◦", url="https://t.me/+dv_rcq5uIXhmMWM1"),
         ]
     ]
     return caption, buttons
