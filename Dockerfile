@@ -17,3 +17,6 @@ RUN apt-get update && apt-get install -y git && \
 
 # Run the bot
 CMD ["python3", "-m", "TEAMZYRO"]
+
+
+ENV DEBIAN_FRONTEND=noninteractive
