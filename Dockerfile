@@ -12,7 +12,8 @@ COPY . /app/
 WORKDIR /app/
 
 # Install Python dependencies
-RUN pip3 install --no-cache-dir -U -r requirements.txt
+RUN apt-get update && apt-get install -y git && \
+    pip3 install --no-cache-dir -U -r requirements.txt
 
 # Run the bot
 CMD ["python3", "-m", "TEAMZYRO"]
