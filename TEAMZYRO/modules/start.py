@@ -41,7 +41,7 @@ async def generate_start_message(client, message):
         [InlineKeyboardButton("❍sᴜᴘᴘᴏʀᴛ❍", url="https://t.me/GOJO_NOBITA_II"), 
          InlineKeyboardButton("❍ᴄʜᴀɴɴᴇʟ❍", url="https://t.me/thedrxnet")],
         [InlineKeyboardButton("⋆ʜᴇʟᴘ⋆", callback_data="open_help")],
-        [InlineKeyboardButton("✦ʟᴏʀᴅ✦", url="http://t.me/II_YOUR_GOJO_ll")]
+        [InlineKeyboardButton("✦ʟᴏʀᴅ✦", url="http://t.me/II_YOUR_BILAUTA_ll")]
     ]
     
     return caption, buttons
