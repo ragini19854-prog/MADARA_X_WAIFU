@@ -1,22 +1,24 @@
-FROM python:3.8.5-slim-buster
+FROM python:3.11-slim
 
-ENV PIP_NO_CACHE_DIR 1
-
-# Upgrade pip and setuptools
-RUN pip3 install --upgrade pip setuptools
-
-# Copy application code
-COPY . /app/
-
-# Set working directory
-WORKDIR /app/
-
-# Install Python dependencies
-RUN apt-get update && apt-get install -y git && \
-    pip3 install --no-cache-dir -U -r requirements.txt
-
-# Run the bot
-CMD ["python3", "-m", "TEAMZYRO"]
-
-
+ENV PIP_NO_CACHE_DIR=1
 ENV DEBIAN_FRONTEND=noninteractive
+
+WORKDIR /app
+
+# Copy files first
+COPY . .
+
+# Install system + python deps
+RUN set -ex && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/* && \
+    apt-get update -o Acquire::Retries=3 && \
+    apt-get install -y --no-install-recommends \
+        git \
+        ca-certificates \
+    && rm -rf /var/lib/apt/lists/* && \
+    pip3 install --upgrade pip setuptools wheel && \
+    pip3 install --no-cache-dir -r requirements.txt
+
+# Run bot
+CMD ["python3", "-m", "TEAMZYRO"]
