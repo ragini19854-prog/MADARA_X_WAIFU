@@ -1,43 +1,33 @@
 import time
 import random
+from pyrogram import filters
+from pyrogram.types import Message
+from TEAMZYRO import app, sudo_users, START_MEDIA
 
-from telegram import Update
-from telegram.ext import CommandHandler, CallbackContext
 
-from TEAMZYRO import application, sudo_users, START_MEDIA
-
-async def ping(update: Update, context: CallbackContext) -> None:
-    if str(update.effective_user.id) not in sudo_users:
-        update.message.reply_text("Nouu.. its Sudo user's Command..")
+@app.on_message(filters.command("ping"))
+async def ping(client, message: Message) -> None:
+    if message.from_user.id not in sudo_users:
+        await message.reply_text("Nouu.. its Sudo user's Command..")
         return
+
     start_time = time.time()
     media = random.choice(START_MEDIA)
-    
-    ping_text = "<blockquote>❛ ᴘɪɴɢ ᴘᴏɴɢ .... 💗</blockquote>"
+
+    ping_text = "> ❛ ᴘɪɴɢ ᴘᴏɴɢ .... 💗"
 
     try:
         if media.lower().endswith(('.png', '.jpg', '.jpeg', '.gif')):
-            message = await update.message.reply_photo(
-                photo=media,
-                caption=ping_text,
-                parse_mode="HTML"
-            )
+            sent = await message.reply_photo(photo=media, caption=ping_text)
         else:
-            message = await update.message.reply_video(
-                video=media,
-                caption=ping_text,
-                parse_mode="HTML"
-            )
-    except:
-        message = await update.message.reply_text(ping_text, parse_mode="HTML")
-    
-    end_time = time.time()
-    elapsed_time = round((end_time - start_time) * 1000, 3)
-    
-    updated_text = f"<blockquote>❛ ᴘɪɴɢ ᴘᴏɴɢ .... 💗\n\n⚡ Pong! {elapsed_time}ms</blockquote>"
-    try:
-        await message.edit_caption(caption=updated_text, parse_mode="HTML")
-    except:
-        await message.edit_text(updated_text, parse_mode="HTML")
+            sent = await message.reply_video(video=media, caption=ping_text)
+    except Exception:
+        sent = await message.reply_text(ping_text)
 
-application.add_handler(CommandHandler("ping", ping))
+    elapsed_time = round((time.time() - start_time) * 1000, 3)
+    updated_text = f"> ❛ ᴘɪɴɢ ᴘᴏɴɢ .... 💗\n> \n> ⚡ Pong! {elapsed_time}ms"
+
+    try:
+        await sent.edit_caption(caption=updated_text)
+    except Exception:
+        await sent.edit_text(updated_text)
