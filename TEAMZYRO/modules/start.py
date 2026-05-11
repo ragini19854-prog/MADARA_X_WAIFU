@@ -23,7 +23,6 @@ async def show_startup_animation(message):
     
     for text in animation_texts:
         try:
-            # Split text into words and animate word by word
             words = text.split()
             animated_msg = ""
             
@@ -34,9 +33,8 @@ async def show_startup_animation(message):
                     sent_msg = await message.reply_text(animated_msg)
                 else:
                     await sent_msg.edit_text(animated_msg)
-                await asyncio.sleep(0.2)  # Speed of animation
+                await asyncio.sleep(0.2)
             
-            # Keep the message for a moment then delete
             await asyncio.sleep(0.5)
             await sent_msg.delete()
             await asyncio.sleep(0.3)
@@ -59,25 +57,26 @@ async def generate_start_message(client, message):
     ping = round(time.time() - message.date.timestamp(), 2)
     uptime = get_uptime()
 
-    
-    caption = f"""🍃 ɢʀᴇᴇᴛɪɴɢs, ɪ'ᴍ {bot_name} 🫧, ɴɪᴄᴇ ᴛᴏ ᴍᴇᴇᴛ ʏᴏᴜ!
-╭━━━━━━━╾❁✦❁╼━━━━━━━╮
-"⟡ ɪ ᴀᴍ ʏᴏᴜʀ ᴡᴀɪғᴜ ɢᴇɴɪᴇ!  
-    sᴜᴍᴍᴏɴ ᴄᴜᴛᴇ ᴡᴀɪғᴜs  
-    ɪɴ ʏᴏᴜʀ ɢʀᴏᴜᴘ ᴄʜᴀᴛ ✧"
-
-"⟡ ᴀᴅᴅ ᴍᴇ ᴛᴏ ʏᴏᴜʀ ɢʀᴏᴜᴘ  
-    & ᴛᴀᴘ /help ғᴏʀ ᴄᴏᴍᴍᴀɴᴅs"
-╰━━━━━━━╾❁✦❁╼━━━━━━━╯
-➺ ᴘɪɴɢ: {ping} ms
-➺ ᴜᴘᴛɪᴍᴇ: {uptime}"""
+    caption = (
+        f"> 🍃 ɢʀᴇᴇᴛɪɴɢs, ɪ'ᴍ {bot_name} 🫧, ɴɪᴄᴇ ᴛᴏ ᴍᴇᴇᴛ ʏᴏᴜ!\n"
+        "> ╭━━━━━━━╾❁✦❁╼━━━━━━━╮\n"
+        "> ⟡ ɪ ᴀᴍ ʏᴏᴜʀ ᴡᴀɪғᴜ ɢᴇɴɪᴇ!\n"
+        ">     sᴜᴍᴍᴏɴ ᴄᴜᴛᴇ ᴡᴀɪғᴜs\n"
+        ">     ɪɴ ʏᴏᴜʀ ɢʀᴏᴜᴘ ᴄʜᴀᴛ ✧\n"
+        "> \n"
+        "> ⟡ ᴀᴅᴅ ᴍᴇ ᴛᴏ ʏᴏᴜʀ ɢʀᴏᴜᴘ\n"
+        ">     & ᴛᴀᴘ /help ғᴏʀ ᴄᴏᴍᴍᴀɴᴅs\n"
+        "> ╰━━━━━━━╾❁✦❁╼━━━━━━━╯\n"
+        f"> ➺ ᴘɪɴɢ: {ping} ms\n"
+        f"> ➺ ᴜᴘᴛɪᴍᴇ: {uptime}"
+    )
 
     buttons = [
         [InlineKeyboardButton("ᴀᴅᴅ ᴍᴇ ᴛᴏ ɢʀᴏᴜᴘ", url=f"https://t.me/{bot_user.username}?startgroup=true")],
-        [InlineKeyboardButton("ɖᴇᴠᴇʟᴏᴘᴇʀ", url="https://t.me/II_YOUR_VILLAIN_II"), 
+        [InlineKeyboardButton("ɖᴇᴠᴇʟᴏᴘᴇʀ", url="https://t.me/YOUR_fucker_dad"),
          InlineKeyboardButton("sᴜᴘᴘᴏʀᴛ", url="https://t.me/+dv_rcq5uIXhmMWM1")],
-        [InlineKeyboardButton("ᴄʜᴀɴɴᴇʟ", url="https://t.me/+Imyf3M9TO5k1ODRl")],
-        [InlineKeyboardButton("🇭 🇪 🇱 🇵  🇦 🇳 🇩  🇨 🇴 🇲 🇲 🇦 🇳 🇩", callback_data="open_help")]
+        [InlineKeyboardButton("ᴄʜᴀɴɴᴇʟ", url="https://t.me/+1NRRqUd1replNTM1")],
+        [InlineKeyboardButton("🇭 🇪 🇱 🇵  🇦 🇳 🇩  🇨 🇴 🇲 🇲 🇦 🇳 🇩", callback_data="open_help")]
     ]
     
     return caption, buttons
@@ -97,10 +96,8 @@ async def generate_group_start_message(client):
 # 🔹 Private Start Command Handler
 @app.on_message(filters.command("start") & filters.private)
 async def start_private_command(client, message):
-    # Check if user exists in user_collection
     existing_user = await user_collection.find_one({"id": message.from_user.id})
     
-    # Save user data only if they don't exist in the collection
     if not existing_user:
         user_data = {
             "id": message.from_user.id,
@@ -114,7 +111,6 @@ async def start_private_command(client, message):
     caption, buttons = await generate_start_message(client, message)
     media = random.choice(START_MEDIA)
     
-    # Show startup animation
     await show_startup_animation(message)
     
     username = f"@{message.from_user.username}" if message.from_user.username else "N/A"
@@ -128,10 +124,8 @@ async def start_private_command(client, message):
             ),
         )
     except ChatWriteForbidden:
-        # Ignore when bot cannot write in log chat, so /start still works for users.
         pass
     except Exception as exc:
-        # Any logging failure should not block /start response in private chat.
         LOG.warning("Failed to send /start log to GLOG (%s): %s", GLOG, exc)
     
     try:
@@ -139,13 +133,13 @@ async def start_private_command(client, message):
             await message.reply_photo(
                 photo=media,
                 caption=caption,
-                reply_markup=InlineKeyboardMarkup(buttons)  # Pass InlineKeyboardMarkup directly
+                reply_markup=InlineKeyboardMarkup(buttons)
             )
         else:
             await message.reply_video(
                 video=media,
                 caption=caption,
-                reply_markup=InlineKeyboardMarkup(buttons)  # Pass InlineKeyboardMarkup directly
+                reply_markup=InlineKeyboardMarkup(buttons)
             )
     except Exception as exc:
         LOG.warning("Failed to send /start media '%s': %s. Falling back to text.", media, exc)
@@ -160,18 +154,17 @@ async def start_group_command(client, message):
     caption, buttons = await generate_group_start_message(client)
     media = random.choice(START_MEDIA)
     
-    # Check if media is image or video based on extension
     if media.lower().endswith(('.png', '.jpg', '.jpeg', '.gif')):
         await message.reply_photo(
             photo=media,
             caption=caption,
-            reply_markup=InlineKeyboardMarkup(buttons)  # Pass InlineKeyboardMarkup directly
+            reply_markup=InlineKeyboardMarkup(buttons)
         )
     else:
         await message.reply_video(
             video=media,
             caption=caption,
-            reply_markup=InlineKeyboardMarkup(buttons)  # Pass InlineKeyboardMarkup directly
+            reply_markup=InlineKeyboardMarkup(buttons)
         )
 
 # 🔹 Function to Find Help Modules
@@ -193,7 +186,7 @@ async def show_help_menu(client, query: CallbackQuery):
 
     await query.message.edit_text(
         "*ᴄʜᴏᴏsᴇ ᴛʜᴇ ᴄᴀᴛᴇɢᴏʀʏ ғᴏʀ ᴡʜɪᴄʜ ʏᴏᴜ ᴡᴀɴɴᴀ ɢᴇᴛ ʜᴇʟᴩ.\n\nᴀʟʟ ᴄᴏᴍᴍᴀɴᴅs ᴄᴀɴ ʙᴇ ᴜsᴇᴅ ᴡɪᴛʜ : /",
-        reply_markup=InlineKeyboardMarkup(buttons)  # Pass InlineKeyboardMarkup directly
+        reply_markup=InlineKeyboardMarkup(buttons)
     )
 
 # 🔹 Individual Module Help Handler
@@ -209,7 +202,7 @@ async def show_help(client, query: CallbackQuery):
         
         await query.message.edit_text(
             f"**{module_name} Help:**\n\n{help_text}",
-            reply_markup=InlineKeyboardMarkup(buttons)  # Pass InlineKeyboardMarkup directly
+            reply_markup=InlineKeyboardMarkup(buttons)
         )
     except Exception as e:
         await query.answer("Help load karne me error aayi!")
@@ -221,8 +214,5 @@ async def back_to_home(client, query: CallbackQuery):
     caption, buttons = await generate_start_message(client, query.message)
     await query.message.edit_text(
         caption,
-        reply_markup=InlineKeyboardMarkup(buttons)  # Pass InlineKeyboardMarkup directly
+        reply_markup=InlineKeyboardMarkup(buttons)
         )
-
-
-
