@@ -1,25 +1,36 @@
 from TEAMZYRO import *
-from telegram import Update
-from telegram.ext import CommandHandler, CallbackContext, MessageHandler, filters, ContextTypes
+from pyrogram import filters
+from pyrogram.types import Message
 import asyncio
 import time
 
-async def message_counter(update: Update, context: CallbackContext) -> None:
-    chat_id = str(update.effective_chat.id)
-    user_id = update.effective_user.id
+
+def _not_command(_, __, message: Message):
+    if message.text and message.text.startswith('/'):
+        return False
+    return True
+
+not_command_filter = filters.create(_not_command)
+
+
+@app.on_message(filters.group & not_command_filter)
+async def message_counter(client, message: Message) -> None:
+    chat_id = str(message.chat.id)
+    user_id = message.from_user.id if message.from_user else None
+    if not user_id:
+        return
     current_time = time.time()
 
-    # Fetch or initialize group data
     existing_group = await group_user_totals_collection.find_one({"group_id": chat_id})
     if not existing_group:
         await group_user_totals_collection.update_one(
-            {"group_id": chat_id}, 
-            {"$set": {"group_id": chat_id, "ctime": 80}},  # Default ctime
+            {"group_id": chat_id},
+            {"$set": {"group_id": chat_id, "ctime": 80}},
             upsert=True
         )
         ctime = 80
     else:
-        ctime = existing_group.get("ctime", 80)  # Use stored ctime or default to 80
+        ctime = existing_group.get("ctime", 80)
 
     if chat_id not in locks:
         locks[chat_id] = asyncio.Lock()
@@ -37,25 +48,22 @@ async def message_counter(update: Update, context: CallbackContext) -> None:
             last_user[chat_id]['count'] += 1
             if last_user[chat_id]['count'] >= 10:
                 if user_id not in warned_users or current_time - warned_users[user_id] >= 600:
-                    cooldown_end = current_time + 600  # 10 minutes se block
+                    cooldown_end = current_time + 600
                     user_cooldowns[user_id] = cooldown_end
                     warned_users[user_id] = current_time
-                    await update.message.reply_text(
-                        f"⚠️ Don't Spam {update.effective_user.first_name}...\n"
+                    await message.reply_text(
+                        f"⚠️ Don't Spam {message.from_user.first_name}...\n"
                         "Your Messages Will be ignored for 10 Minutes..."
                     )
                 return
         else:
             last_user[chat_id] = {'user_id': user_id, 'count': 1}
 
-        # Normal chats ke liye ctime messages par ek character bhejna hai
         if chat_id in normal_message_counts:
             normal_message_counts[chat_id] += 1
         else:
             normal_message_counts[chat_id] = 1
 
         if normal_message_counts[chat_id] % ctime == 0:
-            await send_image(update, context)
-            normal_message_counts[chat_id] = 0  # Reset count
-
-application.add_handler(MessageHandler(~filters.COMMAND, message_counter, block=False))
+            await send_image(message, None)
+            normal_message_counts[chat_id] = 0
