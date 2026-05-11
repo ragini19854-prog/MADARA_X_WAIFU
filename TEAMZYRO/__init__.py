@@ -35,22 +35,22 @@ def LOGGER(name: str) -> logging.Logger:
 
 api_id = int(os.getenv("API_ID", "23343216"))
 api_hash = os.getenv("API_HASH", "1d66f21cd828dc22b80e3750719bd94a")
-TOKEN = os.getenv("TOKEN", "")
+TOKEN = os.getenv("TOKEN", "8264339422:AAEDnkBcUgK_ul-Ivjq32i_lkrkPZE_pPlU")
 
 GLOG = os.getenv("GLOG", "gojo_waifu")
-CHARA_CHANNEL_ID = os.getenv("CHARA_CHANNEL_ID", "gojo_waifu")
-SUPPORT_CHAT_ID = int(os.getenv("SUPPORT_CHAT_ID", "-1002792716047"))
+CHARA_CHANNEL_ID = os.getenv("CHARA_CHANNEL_ID", "abrakatabragiligilichu")
+SUPPORT_CHAT_ID = int(os.getenv("SUPPORT_CHAT_ID", "-1003992204811"))
 
 mongo_url = os.getenv(
     "MONGO_URL",
-    "mongodb+srv://Gojowaifu2:Gojowaifu2@cluster0.uvox90s.mongodb.net/?retryWrites=true&w=majority"
+    "mongodb+srv://bsdk:betichod@cluster0.fgj1r9z.mongodb.net/?retryWrites=true&w=majority"
 )
 
-MUSJ_JOIN = os.getenv("MUSJ_JOIN", "https://t.me/+8KU5ZDxvZyw0N2U1")
+MUSJ_JOIN = os.getenv("MUSJ_JOIN", "https://t.me/+1NRRqUd1replNTM1")
 
 START_MEDIA = os.getenv(
     "START_MEDIA",
-    "https://files.catbox.moe/aw6zui.jpg"
+    "https://i.ibb.co/bgcHSc78/image.jpg"
 ).split(',')
 
 PHOTO_URL = [
@@ -58,13 +58,13 @@ PHOTO_URL = [
     os.getenv("PHOTO_URL_2", "https://files.catbox.moe/3saw6n.jpg")
 ]
 
-STATS_IMG = ["https://files.catbox.moe/0zvwpt.jpg"]
+STATS_IMG = ["https://i.ibb.co/bgcHSc78/image.jpg"]
 
-SUPPORT_CHAT = os.getenv("SUPPORT_CHAT", "https://t.me/GOJO_NOBITA_II")
-UPDATE_CHAT = os.getenv("UPDATE_CHAT", "https://t.me/GOJO_SUPPORT_GROUP_II")
+SUPPORT_CHAT = os.getenv("SUPPORT_CHAT", "https://t.me/+n7E6Q19lY0cxNDBl")
+UPDATE_CHAT = os.getenv("UPDATE_CHAT", "https://t.me/+1NRRqUd1replNTM1")
 
-SUDO = list(map(int, os.getenv("SUDO", "7553434931").split(',')))
-OWNER_ID = int(os.getenv("OWNER_ID", "7553434931"))
+SUDO = list(map(int, os.getenv("SUDO", "8441236350").split(',')))
+OWNER_ID = int(os.getenv("OWNER_ID", "8441236350"))
 
 
 
